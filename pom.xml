@@ -17,6 +17,19 @@
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
   </properties>
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://spdx.org/licenses/Apache-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>zhuch-iv</id>
+      <name>Ivan Evseenko</name>
+    </developer>
+  </developers>
   <dependencyManagement>
     <dependencies>
       <dependency>

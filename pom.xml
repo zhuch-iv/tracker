@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.zhu4</groupId>
   <artifactId>tracker</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <kotlin.version>1.6.21</kotlin.version>
@@ -14,6 +14,7 @@
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>2.10.3.Final</quarkus.platform.version>
+    <hibernate.version>5.6.9.Final</hibernate.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
   </properties>
@@ -105,7 +106,22 @@
   <build>
     <sourceDirectory>src/main/kotlin</sourceDirectory>
     <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+    <!--suppress UnresolvedMavenProperty -->
+    <finalName>${project.name}-v${project.version}-${git.commit.id.abbrev}</finalName>
     <plugins>
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>5.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+            <phase>initialize</phase>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
@@ -136,6 +152,7 @@
         <configuration>
           <systemPropertyVariables>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+            <!--suppress UnresolvedMavenProperty -->
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
         </configuration>
@@ -153,6 +170,7 @@
               <systemPropertyVariables>
                 <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                <!--suppress UnresolvedMavenProperty -->
                 <maven.home>${maven.home}</maven.home>
               </systemPropertyVariables>
             </configuration>
@@ -194,8 +212,24 @@
             <option>all-open:annotation=javax.ws.rs.Path</option>
             <option>all-open:annotation=javax.enterprise.context.ApplicationScoped</option>
             <option>all-open:annotation=io.quarkus.test.junit.QuarkusTest</option>
+            <option>all-open:annotation=javax.persistence.Entity</option>
           </pluginOptions>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.hibernate.orm.tooling</groupId>
+        <artifactId>hibernate-enhance-maven-plugin</artifactId>
+        <version>${hibernate.version}</version>
+        <executions>
+          <execution>
+            <configuration>
+              <enableDirtyTracking>true</enableDirtyTracking>
+            </configuration>
+            <goals>
+              <goal>enhance</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

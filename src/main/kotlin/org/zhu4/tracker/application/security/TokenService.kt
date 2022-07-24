@@ -21,10 +21,10 @@ class TokenService(
 ) {
 
     @Inject
-    private lateinit var executor: ManagedExecutor
+    internal lateinit var executor: ManagedExecutor
 
     @ConfigProperty(name = "smallrye.jwt.sign.duration")
-    private var duration: Long = 0
+    internal var duration: Long = 0
 
     fun authUser(request: AuthUserRequest): Uni<Token> =
         userRepository.findByUsernameFetchGroups(request.username!!)
@@ -47,7 +47,7 @@ class TokenService(
         Token(
             Jwt.issuer("https://zhu4.org")
                 .upn(user.id.toString())
-                .groups(user.groups.mapTo(HashSet(), Group::value))
+                .groups(user.groups.mapTo(LinkedHashSet(), Group::value))
                 .issuedAt(currentTime)
                 .expiresAt(currentTime + duration)
                 .sign()

@@ -28,7 +28,7 @@ class Line(
         joinColumns = [ JoinColumn(name = "line_id") ],
         inverseJoinColumns = [ JoinColumn(name = "label_id") ]
     )
-    var labels: List<Label> = emptyList(),
+    var labels: MutableSet<Label> = LinkedHashSet(),
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     var user: User? = null

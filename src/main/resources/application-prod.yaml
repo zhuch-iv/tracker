@@ -2,7 +2,6 @@ quarkus:
   datasource:
     db-kind: postgresql
     username: tracker
-    jdbc: false
     reactive:
       url: postgresql://localhost:5432/tracker
   hibernate-orm:

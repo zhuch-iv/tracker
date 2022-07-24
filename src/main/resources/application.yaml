@@ -1,0 +1,30 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: tracker
+    password: P@ssword!
+    reactive:
+      url: postgresql://localhost:5432/tracker
+  hibernate-orm:
+    log:
+      sql: true
+      format-sql: true
+    database:
+      generation: drop-and-create
+  native:
+    resources:
+      includes: publicKey.pem,privateKey.pem
+
+mp:
+  jwt:
+    verify:
+      issuer: https://zhu4.org
+      publickey:
+        location: publicKey.pem
+
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: /privateKey.pem
+      duration: 86400

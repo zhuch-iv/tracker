@@ -1,0 +1,13 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: tracker
+    jdbc: false
+    reactive:
+      url: postgresql://localhost:5432/tracker
+  hibernate-orm:
+    log:
+      sql: false
+      format-sql: false
+    database:
+      generation: update

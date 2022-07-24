@@ -15,7 +15,7 @@ class UserService(
 ) {
 
     @Inject
-    private lateinit var executor: ManagedExecutor
+    internal lateinit var executor: ManagedExecutor
 
     fun register(request: RegisterUserRequest): Uni<Void> =
         Uni.createFrom().item(request)

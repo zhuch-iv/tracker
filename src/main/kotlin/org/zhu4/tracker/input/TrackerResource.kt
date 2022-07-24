@@ -24,7 +24,7 @@ class TrackerResource(
 ) {
 
     @Inject
-    lateinit var jwt: JsonWebToken
+    internal lateinit var jwt: JsonWebToken
 
     @POST
     @RolesAllowed("User")

@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped
 @ApplicationScoped
 class GroupRepository: PanacheRepository<Group> {
 
-    fun save(groups: Set<Group>): Uni<Set<Group>> {
+    fun save(groups: Set<Group>): Uni<MutableSet<Group>> {
         return find("#Group.findByValues", groups.map(Group::value))
             .list<Group>()
             .map { exists ->

@@ -20,7 +20,7 @@ data class LineDto(
     fun toLine(): Line {
         return Line(
             value = value!!,
-            labels = labels!!.map { Label(value = it) },
+            labels = labels!!.mapTo(HashSet()) { Label(value = it) },
             user = user!!
         )
     }

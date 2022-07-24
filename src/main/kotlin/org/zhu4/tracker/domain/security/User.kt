@@ -30,7 +30,7 @@ class User(
         joinColumns = [ JoinColumn(name = "user_id") ],
         inverseJoinColumns = [ JoinColumn(name = "group_id") ]
     )
-    var groups: Set<Group> = emptySet(),
+    var groups: MutableSet<Group> = LinkedHashSet(),
     @Column(name = "password_hash", nullable = false)
     var passwordHash: String? = null,
     @Column(name = "email")

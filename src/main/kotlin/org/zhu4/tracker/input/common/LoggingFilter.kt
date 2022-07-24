@@ -12,10 +12,10 @@ import javax.ws.rs.ext.Provider
 @Provider
 class LoggingFilter: ContainerRequestFilter {
     @Context
-    private lateinit var info: UriInfo
+    lateinit var info: UriInfo
 
     @Context
-    private lateinit var request: HttpServerRequest
+    lateinit var request: HttpServerRequest
 
     override fun filter(context: ContainerRequestContext) {
         log.info("Request {} {} from IP {}", context.method, info.path, request.remoteAddress().toString())

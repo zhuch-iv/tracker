@@ -8,11 +8,11 @@ import javax.enterprise.context.ApplicationScoped
 @ApplicationScoped
 class LabelRepository : PanacheRepository<Label> {
 
-    fun save(labels: List<Label>): Uni<List<Label>> {
+    fun save(labels: Set<Label>): Uni<MutableSet<Label>> {
         return find("#Label.findByValues", labels.map(Label::value))
             .list<Label>()
             .map { exists ->
-                labels.filterTo(ArrayList(exists)) { label -> exists.none { it.value == label.value } }
+                labels.filterTo(mutableSetOf(*exists.toTypedArray())) { label -> exists.none { it.value == label.value } }
             }
     }
 }

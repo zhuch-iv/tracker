@@ -9,6 +9,7 @@ import org.zhu4.tracker.application.security.UserService
 import org.zhu4.tracker.domain.security.Token
 import javax.enterprise.context.ApplicationScoped
 import javax.validation.Valid
+import javax.ws.rs.Consumes
 import javax.ws.rs.POST
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
@@ -24,6 +25,7 @@ class UserResource(
 
     @POST
 //    @RolesAllowed("Admin")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     fun register(@Valid request: RegisterUserRequest): Uni<Void> {
         return userService.register(request)
@@ -31,6 +33,7 @@ class UserResource(
 
     @POST
     @Path("/token")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     fun token(@Valid request: AuthUserRequest): Uni<Token> {
         return tokenService.authUser(request)
